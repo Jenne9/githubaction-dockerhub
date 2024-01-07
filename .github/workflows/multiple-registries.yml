@@ -1,0 +1,46 @@
+---
+name: Push docker image on multiple registries
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-dockerhub:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: dockerhub
+    steps:
+      - name: build dockerfile for dockerhub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: build docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: |
+            ${{ vars.DOCKER_IMAGE }}
+
+  build-github-action:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGE_GA: ${{ vars.REGISTRY }}/neofetch
+    environment:
+      name: github-action
+    steps:
+      - name: build dockerfile for github Action
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.REGISTRY }} 
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: |
+            ${{ env.DOCKER_IMAGE_GA}}
