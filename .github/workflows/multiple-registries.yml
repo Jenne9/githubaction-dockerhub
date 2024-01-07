@@ -22,12 +22,12 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ vars.DOCKER_IMAGE }}
+            ${{ vars.DOCKER_IMAGE }}:latest
 
   build-github-action:
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE_GA: ${{ vars.REGISTRY }}/neofetch
+      DOCKER_IMAGE_GA: ${{ vars.REGISTRY }}/${{ vars.ORGANIZATION }}/neofetch
     environment:
       name: github-action
     steps:
