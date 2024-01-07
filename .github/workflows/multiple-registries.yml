@@ -27,7 +27,7 @@ jobs:
   build-github-action:
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE_GA: ${{ vars.REGISTRY }}/${{ github.repository_owner }}/${{ github.repository }}/neofetch
+      DOCKER_IMAGE_GA: ${{ vars.REGISTRY }}/${{ lowercase | github.repository }}/neofetch
     environment:
       name: github-action
     steps:
