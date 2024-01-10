@@ -1,3 +1,3 @@
 # githubaction-dockerhub
 
-Création d'un workflow qui build une image et push et le Dockerhub.
+Creation of a workflow that builds an image and pushes it to Dockerhub.
